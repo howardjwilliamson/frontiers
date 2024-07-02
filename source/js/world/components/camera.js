@@ -9,8 +9,7 @@ function createCamera()
         0.1, // Near clipping plane.
         100 // Far clipping plane.
     );
-    camera.position.set(0, 0, 10);
-    const mps = 1;
+    camera.position.set(10, 10, 20);
 
     camera.tick = (s) =>
         {
