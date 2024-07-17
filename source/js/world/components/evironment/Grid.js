@@ -18,6 +18,12 @@ class Grid extends Group
                 this.add(t);
             }
         }
+        
+    }
+
+    tick(s)
+    {
+
     }
 
 }
