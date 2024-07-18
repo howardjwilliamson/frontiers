@@ -7,7 +7,7 @@ import
 
 import
 {
-    Sfx, Play
+    Sfx, PlaySfx
 } from "./Sfx";
 
 const STATUS =
@@ -35,7 +35,7 @@ class Recycle extends Mesh
     {
         this.position.z -= 0.1;
         this.material.color.setHex(STATUS.active.color);
-        Play
+        PlaySfx
         (
             Sfx["ding"].url, 1,
             () =>

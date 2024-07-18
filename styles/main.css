@@ -28,3 +28,12 @@ h1
         app to prevent flashing while loading. */
     background-color:skyblue;
 }
+
+#info {
+	position: absolute;
+	top: 30px;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+}

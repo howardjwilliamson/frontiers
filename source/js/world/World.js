@@ -11,6 +11,7 @@ import { Water } from './components/evironment/Water';
 import { Raycaster, Vector2 } from 'three';
 import { Game } from './components/evironment/Game';
 import { Recycle } from './components/evironment/Recycle';
+import { Play } from './components/evironment/Play';
 
 let
     _camera,
@@ -21,9 +22,11 @@ let
     _loop,
     _resizer,
     _keyboard_grid,
-    _water,
     _recycle,
-    _game;
+    _play,
+    _game,
+    _plays = 0,
+    _successes = 0;
 
 const 
     _mouse = new Vector2(),
@@ -43,10 +46,20 @@ class World
         _controls = createControls(_camera, _renderer.domElement);
         _controls.addEventListener('change', () => { _renderer.render(_scene, _camera); } );
         container.append(_renderer.domElement);
-        _keyboard_grid = new Grid(8, 2);
-        _water = new Water();
+        _keyboard_grid = new Grid(8, 2, this.grid_onclick);
+        _game = new Game(3, this.game_on_complete, this.game_on_match, this.game_on_fail);
+        _play = new Play(_game);
         console.log("world.created");
-        _recycle = new Recycle(this.recycled);
+        _recycle = new Recycle
+        (
+            ()=>
+            {
+                _scene.remove(_game, _play);
+                _game = new Game(5, this.game_on_complete, this.game_on_match, this.game_on_fail);
+                _play = new Play(_game);
+                _scene.add(_game, _play);
+            }
+        );
     }
 
     onclick(event)
@@ -65,12 +78,6 @@ class World
         }
     }
 
-    recycled()
-    {
-        console.log("recycled");
-        _game = new Game(5);
-    }
-
     async init()
     {
         // Add models here.
@@ -78,7 +85,8 @@ class World
         (
             _light.light, _light.ambient, _light.hemi,
             _keyboard_grid,
-            _water,
+            _game,
+            _play,
             _recycle
         );
         // Add updatable elements here.
@@ -102,6 +110,35 @@ class World
         _loop.stop();
         console.log("world.stop");
     }
+
+    grid_onclick(note)
+    {
+        console.log("Click:" + note);
+        _game.test(note);
+    }
+
+    game_on_match()
+    {
+        console.log("game.match");
+    }
+
+    game_on_complete()
+    {
+        console.log("game.complete");
+        _plays++;
+        _successes++;
+        document.getElementById("info").innerText = _successes + "/" + _plays;
+
+    }
+
+    game_on_fail()
+    {
+        console.log("game.fail");
+        _plays++;
+        document.getElementById("info").innerText = _successes + "/" + _plays;
+    }
+
 }
+
 
 export { World };

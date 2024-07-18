@@ -16,7 +16,7 @@ export const Notes = ["a", "b", "c", "d", "e", "f", "g", "A"];
 
 export const Sharps = ["a#", "xx", "c#", "d#", "xx", "f#", "g#", "xx"];
 
-export const Play = (url, vol, on_end) =>
+export const PlayNote = (url, vol, on_end) =>
 {
     const audio = new Audio(url);
     audio.volume = vol;
