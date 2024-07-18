@@ -2,7 +2,7 @@
   "name": "musoblocks",
   "version": "1.0.0",
   "description": "An example Musoblocs app.",
-  "main": "dist/source/js/index.js",
+  "main": "source/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy":"gh-pages -d dist"
